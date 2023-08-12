@@ -1,8 +1,71 @@
 <html>
-<head>
-</head>
-<body>
-    <a href="./ztree/api/index.html">zTree文档</a>
-    <a href="./ztree/demo/cn/index.html">zTreeDemo</a>
-</body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link
+      rel="stylesheet"
+      href="ztree/css/zTreeStyle/zTreeStyle.css"
+      type="text/css"
+    />
+    <script src="ztree/js/jquery-1.4.4.min.js"></script>
+    <script src="ztree/js/jquery.ztree.all.min.js"></script>
+    <style>
+      .container {
+        display: flex;
+        height: 100%;
+      }
+      .left {
+        width: 250px;
+        border-right: 1px solid lightgray;
+      }
+      .content {
+        background-color: greenyellow;
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <ul id="tree" class="ztree"></ul>
+      </div>
+      <div class="content">
+        <iframe
+          id="iframe"
+          width="100%"
+          height="100%"
+          style="border: 0"
+        ></iframe>
+      </div>
+    </div>
+  </body>
+  <script>
+    var setting = {
+      view: {
+        dblClickExpand: false,
+        showLine: true,
+        selectedMulti: false,
+      },
+      data: {},
+      callback: {
+        onClick: function (event, treeId, treeNode) {
+          if (treeNode.path) {
+            document.getElementById("iframe").src = treeNode.path;
+          }
+        },
+      },
+    };
+    var zNodes = [
+      {
+        name: "zTree",
+        children: [
+          { name: "zTree文档11", path: "./ztree/api/index.html" },
+          { name: "zTreeDemo", path: "./ztree/demo/cn/index.html" },
+        ],
+      },
+    ];
+
+    $(document).ready(function () {
+      $.fn.zTree.init($("#tree"), setting, zNodes);
+    });
+  </script>
 </html>
